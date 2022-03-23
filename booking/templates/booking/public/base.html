@@ -1,0 +1,40 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Inspirus Room</title>
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'booking/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'booking/style/customize.css' %}">
+    
+  </head>
+  <body>
+    <div class="container">
+      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+          <span class="fs-4">Inspirus Room</span>
+        </a>
+    
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Booking</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+        </ul>
+    
+        <div class="col-md-3 text-end">
+          {% if student_id %}
+            <a href="./login_out" type="button" class="btn btn-outline-primary me-2">Login out</a>
+          {% else %}
+            <a href="./login" type="button" class="btn btn-outline-primary me-2">Login</a>
+          {% endif %}
+          
+          <a type="button" class="btn btn-primary">Sign-up</a>
+        </div>
+      </header>
+      {% block content %}
+      {% endblock  %}
+    </div>
+  </body>
+</html>
