@@ -1,0 +1,89 @@
+{% extends 'booking/public/base.html' %}
+{% block content  %}
+<div class="card login_card">
+    <div class="card-header">
+        Login
+    </div>
+    <div class="card-body">
+        <form class="row g-3 needs-validation was-validated" action="./registration_submit" method="POST" novalidate >
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="studentId" class="form-label">Student ID</label>
+              <input type="text" class="form-control" name="studentId" id="studentId" pattern="[0-9]{6,10}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter 6-10 numbers only.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="studentName" class="form-label">Student Name</label>
+              <input type="text" class="form-control" name="studentName" id="studentName"  required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please enter your name.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" pattern=".{8,25}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Password must contains more than 7 and no more than 25 characters.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirm_password" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password"  pattern=".{8,}" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please repeat your password.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">E-mail</label>
+              <input type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" id="email" aria-describedby="emailHelp" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Wrong E-mail address.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+  (function () {
+    
+  
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+    //console.log("111")
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          var repeat = document.getElementById("confirm_password").value == document.getElementById("password").value     
+          if (!(form.checkValidity()&&repeat)) {
+            document.getElementById("confirm_password").value=''
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
+
+{% endblock %}

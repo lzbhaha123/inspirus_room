@@ -18,19 +18,19 @@
         </a>
     
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+          <li class="nav-item"><a href="./" class="nav-link active" aria-current="page">Home</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Booking</a></li>
           <li class="nav-item"><a href="#" class="nav-link">About</a></li>
         </ul>
     
         <div class="col-md-3 text-end">
           {% if student_id %}
-            <a href="./login_out" type="button" class="btn btn-outline-primary me-2">Login out</a>
+            <a href="./login_out" class="btn btn-outline-primary me-2">Login out</a>
           {% else %}
-            <a href="./login" type="button" class="btn btn-outline-primary me-2">Login</a>
+            <a href="./login"  class="btn btn-outline-primary me-2">Login</a>
           {% endif %}
           
-          <a type="button" class="btn btn-primary">Sign-up</a>
+          <a href="./registration" class="btn btn-primary">Sign-up</a>
         </div>
       </header>
       {% block content %}
