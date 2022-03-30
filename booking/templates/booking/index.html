@@ -3,4 +3,32 @@
     {% if student_id %}
         Welcome: {{student_name}}
     {% endif %}
+
+    {% if room_list %}
+        
+        {% for room in room_list %}
+            <div class="card" style=" margin:5px auto  ; width: 30rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ room.name }}</h5>
+                  <p class="card-text">{{ room.room_address }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for f in room.feature_detail %}
+
+                    <li class="list-group-item">{{f.feature.name}} x {{f.feature_count}}</li>
+
+                    {% endfor %}
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Check detail</a>
+                  <a href="#" class="card-link">Book</a>
+                </div>
+              </div>
+
+        {% endfor %}
+        
+        
+    {% else %}
+        <p>No rooms are available.</p>
+    {% endif %}
 {% endblock %}

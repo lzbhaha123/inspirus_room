@@ -26,3 +26,24 @@ class FeatureListToFeature(models.Model):
     feature_list =  models.ForeignKey(FeatureList,on_delete=models.CASCADE)
     feature = models.ForeignKey(Feature,on_delete=models.CASCADE)
     feature_count = models.IntegerField(max_length=25)
+    
+class GuideLine(models.Model):
+    guideline_id = models.AutoField(primary_key=True)
+    name =  models.CharField(max_length=25)
+    content =  models.CharField(max_length=255)
+    def __str__(self):
+        return self.name
+    
+class Room(models.Model):
+    room_id = models.AutoField(primary_key=True)
+    name =  models.CharField(max_length=25)
+    room_address =  models.CharField(max_length=255)
+    feature_list = models.ForeignKey(FeatureList,on_delete=models.SET_NULL,null=True)
+    guideline = models.ForeignKey(GuideLine,on_delete=models.SET_NULL,null=True)
+    other_detail =  models.CharField(max_length=255)
+    qe_code_url =  models.CharField(max_length=255)
+    def feature_detail(self):
+        return FeatureListToFeature.objects.filter(feature_list=self.feature_list)
+        
+    def __str__(self):
+        return self.name

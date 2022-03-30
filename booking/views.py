@@ -1,7 +1,7 @@
 import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from booking.models import Student
+from booking.models import Student,Room
 from django.core import serializers
 
 
@@ -12,7 +12,9 @@ def index(request):
      except:
           pass
      
-     return render(request, 'booking/index.html', {'student_id':student_id,'student_name':student_name})
+     room_list = Room.objects.order_by('room_id')
+     
+     return render(request, 'booking/index.html', {'student_id':student_id,'student_name':student_name,'room_list':room_list})
 
 def login(request):
      return render(request, 'booking/login.html', {})
