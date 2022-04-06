@@ -4,6 +4,8 @@
         Welcome: {{student_name}}
     {% endif %}
 
+ 
+
     {% if room_list %}
         
         {% for room in room_list %}
@@ -20,12 +22,35 @@
                     {% endfor %}
                 </ul>
                 <div class="card-body">
-                  <a href="#" class="card-link">Check detail</a>
-                  <a href="#" class="card-link">Book</a>
+                  <button onclick="show_detial({{room.room_id}})" class="card-link">Check detail</button>
+                  <a href="./booking_room?roomid=1" class="card-link">Book</a>
+                </div>
+              </div>
+
+
+              <div class="top-50 start-0 translate-middle-y" style="z-index: 11" data-bs-autohide="false">
+                <div id="liveToast{{ room.room_id }}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                    <strong class="me-auto">{{ room.name }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                    {{ room.room_address }}
+                  </div>
                 </div>
               </div>
 
         {% endfor %}
+
+        
+
+        <script>
+            function show_detial(id){
+                var toast = new bootstrap.Toast(document.getElementById('liveToast'+id))
+                toast.show()
+            }
+            
+        </script>
         
         
     {% else %}

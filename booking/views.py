@@ -47,6 +47,9 @@ def registration_submit(request):
                         student_email=request.POST.get("email"),
                         student_password=request.POST.get("password"))
      new_user.save()
-
-     
      return HttpResponseRedirect("./login")
+
+def booking_room(request):
+     room_id = request.GET.get("roomid")
+     #return HttpResponse(room_id)
+     return render(request, 'booking/booking_room.html', {})

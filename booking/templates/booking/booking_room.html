@@ -1,0 +1,85 @@
+{% extends 'booking/public/base.html' %}
+{% block content  %}
+
+    <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+
+    {% if student_id %}
+        Welcome: {{student_name}}
+    {% endif %}
+    
+
+    <div id="calendar" style="height: 200px;"></div>
+    
+    <script>
+        var cal = new tui.Calendar('#calendar', {
+            defaultView: 'week',
+            useCreationPopup: false,
+            useDetailPopup: false,
+            taskView:false,
+            week: {
+                workweek:true,
+                narrowWeekend: false,
+                hourStart:9,
+                hourEnd:17,
+            }
+        });
+
+        // event handlers
+        cal.on({
+            'clickSchedule': function(e) {
+                console.log('clickSchedule', e);
+                /* step1. open custom detail popup */
+                const willModify = confirm(`title: ${e.schedule.title}\n when: ${yyyymmdd(new Date(e.schedule.start))} \nWill you update schedule?`);
+
+                if (willModify) { // step1-1. open edit popup */ 
+                    e.schedule.title = prompt('Schedule', e.schedule.title);
+                    cal.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
+                }
+            },
+            'beforeCreateSchedule': function(e) {
+                console.log('beforeCreateSchedule', e);
+                /* step1. open custom edit popup */
+                const result = confirm("Are you sure, you want to booking between this time?");
+                
+                if (result){
+                    console.log(result)
+                    var schedule = {
+                        id: +new Date(),
+                        title: "booking",
+                        isAllDay: e.isAllDay,
+                        start: e.start,
+                        end: e.end,
+                        category:"time"
+                    };
+                    /* step2. save schedule */
+                    cal.createSchedules([schedule]);
+                }
+                e.guide.clearGuideElement();
+            },
+            'beforeUpdateSchedule': function(e) {
+                console.log('beforeUpdateSchedule', e);
+                e.schedule.start = e.start;
+                e.schedule.end = e.end;
+                cal.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
+            },
+            'beforeDeleteSchedule': function(e) {
+                console.log('beforeDeleteSchedule', e);
+                cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+            }
+        });
+
+        function yyyymmdd(dateIn) {
+            var yyyy = dateIn.getFullYear();
+            var mm = dateIn.getMonth()+1; // getMonth() is zero-based
+            var dd  = dateIn.getDate();
+            return String(10000*yyyy + 100*mm + dd); // Leading zeros for mm and dd
+        }
+
+    </script>
+
+      
+
+{% endblock %}

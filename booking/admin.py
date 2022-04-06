@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Student,Feature,FeatureList,FeatureListToFeature,Room,GuideLine
+from .models import Student,Feature,FeatureList,FeatureListToFeature,Room,GuideLine,Booking
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('student_id', 'student_name', 'student_email')
@@ -22,5 +22,6 @@ admin.site.register(Student,StudentAdmin)
 admin.site.register(Feature)
 admin.site.register(FeatureList,FeatureListAdmin)
 admin.site.register(GuideLine)
+admin.site.register(Booking)
 
 #admin.site.register(FeatureListToFeature)

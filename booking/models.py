@@ -1,4 +1,5 @@
 from statistics import mode
+from xml.parsers.expat import model
 from django.db import models
 
 # Create your models here.
@@ -47,3 +48,16 @@ class Room(models.Model):
         
     def __str__(self):
         return self.name
+    
+class Booking(models.Model):
+    booking_id = models.AutoField(primary_key=True)
+    name =  models.CharField(max_length=25)
+    start_time =  models.CharField(max_length=25)
+    end_time =  models.CharField(max_length=25)
+    create_time =  models.CharField(max_length=25)
+    confirm = models.BooleanField(default=False)
+    student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True)
+    room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.name
+    
