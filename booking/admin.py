@@ -16,12 +16,15 @@ class FeatureListAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('name', 'room_address')
     
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('create_time', 'name')
+    
     
 admin.site.register(Room,RoomAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Feature)
 admin.site.register(FeatureList,FeatureListAdmin)
 admin.site.register(GuideLine)
-admin.site.register(Booking)
+admin.site.register(Booking,BookingAdmin)
 
 #admin.site.register(FeatureListToFeature)

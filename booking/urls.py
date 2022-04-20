@@ -10,4 +10,5 @@ urlpatterns = [
     path('registration', views.registration, name='registration'),
     path('registration_submit', views.registration_submit, name='registration_submit'),
     path('booking_room', views.booking_room, name='booking_room'),
+    path('add_booking', views.add_booking, name='add_booking'),
 ]

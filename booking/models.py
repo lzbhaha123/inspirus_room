@@ -51,10 +51,10 @@ class Room(models.Model):
     
 class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
-    name =  models.CharField(max_length=25)
-    start_time =  models.CharField(max_length=25)
-    end_time =  models.CharField(max_length=25)
-    create_time =  models.CharField(max_length=25)
+    name =  models.CharField(max_length=50)
+    start_time =  models.CharField(max_length=50)
+    end_time =  models.CharField(max_length=50)
+    create_time =  models.CharField(max_length=50)
     confirm = models.BooleanField(default=False)
     student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True)
     room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True)

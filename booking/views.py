@@ -1,8 +1,11 @@
 import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from booking.models import Student,Room
+from booking.models import Student,Room,Booking
 from django.core import serializers
+from django.http import JsonResponse
+from datetime import datetime
+import json
 
 
 def index(request):
@@ -52,4 +55,25 @@ def registration_submit(request):
 def booking_room(request):
      room_id = request.GET.get("roomid")
      #return HttpResponse(room_id)
-     return render(request, 'booking/booking_room.html', {})
+     #room = Room.objects.get(room_id=room_id)
+     bookings = Booking.objects.filter(room=Room.objects.get(room_id=room_id))
+     
+     return render(request, 'booking/booking_room.html', {"bookings":serializers.serialize("json", bookings)})
+
+def add_booking(request):
+     room_id = request.POST.get("roomId")
+     start = request.POST.get("start")
+     end = request.POST.get("end")
+     student_id = ""
+     try:
+          student_id = request.session['student_id']
+     except:
+         return JsonResponse({"login":True}, status=200)
+     if student_id=="":
+          return JsonResponse({"login":True}, status=200)
+     student_obj = Student.objects.get(student_id = student_id)
+     room_obj = Room.objects.get(room_id = room_id)
+     new_booking = Booking(name="booking test",start_time=start,end_time=end,create_time=datetime.now(),confirm=False,student=student_obj,room=room_obj)
+     new_booking.save()
+     
+     return JsonResponse({"type":True}, status=200)

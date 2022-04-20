@@ -9,7 +9,6 @@
     {% if student_id %}
         Welcome: {{student_name}}
     {% endif %}
-    
 
     <div id="calendar" style="height: 200px;"></div>
     
@@ -27,14 +26,29 @@
             }
         });
 
+        var bookings = JSON.parse('{{bookings}}'.replace(/&quot;/g,'"'))
+        var schedules = new Array()
+        for( var i =0; i < bookings.length;i++){
+            var s ={
+                id: bookings[i].pk,
+                calendarId: bookings[i].pk,
+                title: 'Occupied',
+                category: 'time',
+                start: new Date(parseInt(bookings[i].fields.start_time)),
+                end: new Date(parseInt(bookings[i].fields.end_time))
+            }
+            schedules.push(s)
+        }
+        
+        cal.createSchedules(schedules)
         // event handlers
         cal.on({
             'clickSchedule': function(e) {
-                console.log('clickSchedule', e);
                 /* step1. open custom detail popup */
                 const willModify = confirm(`title: ${e.schedule.title}\n when: ${yyyymmdd(new Date(e.schedule.start))} \nWill you update schedule?`);
-
+                
                 if (willModify) { // step1-1. open edit popup */ 
+                    
                     e.schedule.title = prompt('Schedule', e.schedule.title);
                     cal.updateSchedule(e.schedule.id, e.schedule.calendarId, e.schedule);
                 }
@@ -45,17 +59,8 @@
                 const result = confirm("Are you sure, you want to booking between this time?");
                 
                 if (result){
-                    console.log(result)
-                    var schedule = {
-                        id: +new Date(),
-                        title: "booking",
-                        isAllDay: e.isAllDay,
-                        start: e.start,
-                        end: e.end,
-                        category:"time"
-                    };
-                    /* step2. save schedule */
-                    cal.createSchedules([schedule]);
+                    bookingRoom(e);
+                    
                 }
                 e.guide.clearGuideElement();
             },
@@ -77,6 +82,40 @@
             var dd  = dateIn.getDate();
             return String(10000*yyyy + 100*mm + dd); // Leading zeros for mm and dd
         }
+        function bookingRoom(e){
+            //console.log(new Date(e.start.valueOf()));
+            $.ajax('./add_booking', {
+                type: 'POST',  // http method
+                data: { 
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    start: e.start.valueOf(),
+                    end:e.end.valueOf(),
+                    roomId: new URLSearchParams(window.location.search).get("roomid")
+                },  // data to submit
+                success: function (data, status, xhr) {
+                    if(data.login){
+                        window.location.replace("./login");
+                    }else if(data.type){
+                        console.log("done")
+                        var schedule = {
+                            id: +new Date(),
+                            title: "Occupied",
+                            isAllDay: e.isAllDay,
+                            start: e.start,
+                            end: e.end,
+                            category:"time"
+                        };
+                        /* step2. save schedule */
+                        cal.createSchedules([schedule]);
+                    }
+                   
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    console.log(jqXhr)
+                }
+            });
+        }
+        
 
     </script>
 
