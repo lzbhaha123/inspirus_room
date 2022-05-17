@@ -1,6 +1,7 @@
 from statistics import mode
 from xml.parsers.expat import model
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Student(models.Model):
@@ -60,4 +61,15 @@ class Booking(models.Model):
     room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.name
-    
+    def period(self):
+        f = datetime.fromtimestamp(int(self.start_time[0:10]))
+        s = datetime.fromtimestamp(int(self.end_time[0:10]))
+        return f.strftime("%d %b %H:%M") +" --- " +s.strftime("%d %b %H:%M")
+    def room_name(self):
+        return self.room.name
+    def student_name(self):
+        return self.student.student_name
+    def student_id(self):
+        return self.student.student_id
+    def booking_time(self):
+        return self.create_time.split(".")[0]

@@ -54,11 +54,16 @@ def registration_submit(request):
 
 def booking_room(request):
      room_id = request.GET.get("roomid")
+     try:
+          student_id = request.session['student_id']
+          student_name = request.session['student_name']
+     except:
+          pass
      #return HttpResponse(room_id)
      #room = Room.objects.get(room_id=room_id)
      bookings = Booking.objects.filter(room=Room.objects.get(room_id=room_id))
      
-     return render(request, 'booking/booking_room.html', {"bookings":serializers.serialize("json", bookings)})
+     return render(request, 'booking/booking_room.html', {'student_id':student_id,'student_name':student_name,"bookings":serializers.serialize("json", bookings)})
 
 def add_booking(request):
      room_id = request.POST.get("roomId")

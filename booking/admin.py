@@ -1,6 +1,8 @@
-from django.contrib import admin
 
+from django.contrib import admin
+#from daterange_filter.filter import DateRangeFilter
 # Register your models here.
+
 from .models import Student,Feature,FeatureList,FeatureListToFeature,Room,GuideLine,Booking
 
 class StudentAdmin(admin.ModelAdmin):
@@ -16,8 +18,17 @@ class FeatureListAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('name', 'room_address')
     
+class StudentFilterForBooking(admin.SimpleListFilter):
+    pass
+        
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('create_time', 'name')
+    search_fields  = ['create_time','student__student_name','student__student_id']
+    list_filter =("start_time",)
+    #list_filter = (
+        #('student', admin.FieldListFilter),
+    #)
+    list_display = ('booking_time','room_name','period','student_id', 'student_name')
+    
     
     
 admin.site.register(Room,RoomAdmin)
