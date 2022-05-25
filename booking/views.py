@@ -5,17 +5,23 @@ from booking.models import Student,Room,Booking
 from django.core import serializers
 from django.http import JsonResponse
 from datetime import datetime
-import json
-
+from django.core.paginator import Paginator
 
 def index(request):
+     student_id = None
+     student_name = None
+     room_list = None
      try:
           student_id = request.session['student_id']
           student_name = request.session['student_name']
      except:
           pass
      
-     room_list = Room.objects.order_by('room_id')
+     try:
+          room_list = Room.objects.order_by('room_id')
+     except:
+          pass
+     
      
      return render(request, 'booking/index.html', {'student_id':student_id,'student_name':student_name,'room_list':room_list})
 
@@ -54,15 +60,19 @@ def registration_submit(request):
 
 def booking_room(request):
      room_id = request.GET.get("roomid")
+     student_id = None
+     student_name = None
      try:
           student_id = request.session['student_id']
           student_name = request.session['student_name']
      except:
           pass
-     #return HttpResponse(room_id)
-     #room = Room.objects.get(room_id=room_id)
-     bookings = Booking.objects.filter(room=Room.objects.get(room_id=room_id))
      
+     bookings = Booking.objects.filter(room=Room.objects.get(room_id=room_id))
+     for obj in bookings:
+          obj.start_time = str(int(datetime.timestamp(datetime.strptime(obj.start_time,"%Y-%m-%d %H:%M:%S"))))+"000"
+          obj.end_time = str(int(datetime.timestamp(datetime.strptime(obj.end_time,"%Y-%m-%d %H:%M:%S"))))+"000"
+
      return render(request, 'booking/booking_room.html', {'student_id':student_id,'student_name':student_name,"bookings":serializers.serialize("json", bookings)})
 
 def add_booking(request):
@@ -78,7 +88,30 @@ def add_booking(request):
           return JsonResponse({"login":True}, status=200)
      student_obj = Student.objects.get(student_id = student_id)
      room_obj = Room.objects.get(room_id = room_id)
+     start = datetime.fromtimestamp(int(start[0:10]))
+     end = datetime.fromtimestamp(int(end[0:10]))
      new_booking = Booking(name="booking test",start_time=start,end_time=end,create_time=datetime.now(),confirm=False,student=student_obj,room=room_obj)
      new_booking.save()
      
      return JsonResponse({"type":True}, status=200)
+
+
+def my_bookings(request):
+     student_id = None
+     student_name = None
+     try:
+          student_id = request.session['student_id']
+          student_name = request.session['student_name']
+          bookings = Booking.objects.filter(student=Student.objects.get(student_id=student_id)).values("booking_id","room__name","start_time","end_time","confirm")
+          paginator = Paginator(bookings, 20)
+          page_number = request.GET.get('page')
+          page_obj = paginator.get_page(page_number)
+          
+          
+          return render(request, 'booking/my_bookings.html',{'page_obj':page_obj,'bookings':bookings,'student_id':student_id,'student_name':student_name})
+     except:
+          pass
+     
+     
+     
+     return render(request, 'booking/my_bookings.html',{'student_id':student_id,'student_name':student_name})

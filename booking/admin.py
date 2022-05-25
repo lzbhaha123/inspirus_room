@@ -22,8 +22,8 @@ class StudentFilterForBooking(admin.SimpleListFilter):
     pass
         
 class BookingAdmin(admin.ModelAdmin):
-    search_fields  = ['create_time','student__student_name','student__student_id']
-    list_filter =("start_time",)
+    search_fields  = ['start_time','student__student_name','student__student_id']
+    list_filter =("confirm",)
     #list_filter = (
         #('student', admin.FieldListFilter),
     #)

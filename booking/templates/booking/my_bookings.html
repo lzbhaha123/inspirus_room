@@ -1,0 +1,58 @@
+{% extends 'booking/public/base.html' %}
+{% block content  %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Room name</th>
+      <th scope="col">Start from</th>
+      <th scope="col">Finish at</th>
+      <th scope="col">Status</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for booking in page_obj %}
+  <tr>
+    <td>{{booking.room__name}}</td><td>{{booking.start_time}}</td><td>{{booking.end_time}}</td><td>{% if booking.confirm %} Confirmed {% else %} Not confirm {% endif %}</td><td><a href="#">Cancel</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+    {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">
+              <span aria-hidden="true">first</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+      {% endif %}
+      <li class="page-item" ><a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+
+    
+      {% if page_obj.has_next %}
+
+      <li class="page-item">  
+        <a class="page-link" aria-label="Next" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+      </li>
+
+      <li class="page-item">  
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last</a>
+      </li>
+      {% endif %}
+  </ul>
+</nav>
+
+
+
+
+
+{% endblock %}

@@ -2,3 +2,20 @@
     width: 40rem;
     margin: 0 auto;
 }
+
+.room_list_board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 110vh;
+    margin: 10px auto;
+}
+
+.room_list_board > div{
+    width: 50vh;
+    margin: 20px 0px 20px
+}
+
+a{
+    text-decoration: none;
+}

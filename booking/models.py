@@ -27,7 +27,7 @@ class FeatureList(models.Model):
 class FeatureListToFeature(models.Model):
     feature_list =  models.ForeignKey(FeatureList,on_delete=models.CASCADE)
     feature = models.ForeignKey(Feature,on_delete=models.CASCADE)
-    feature_count = models.IntegerField(max_length=25)
+    feature_count = models.IntegerField()
     
 class GuideLine(models.Model):
     guideline_id = models.AutoField(primary_key=True)
@@ -44,6 +44,7 @@ class Room(models.Model):
     guideline = models.ForeignKey(GuideLine,on_delete=models.SET_NULL,null=True)
     other_detail =  models.CharField(max_length=255)
     qe_code_url =  models.CharField(max_length=255)
+    picture = models.CharField(max_length=50,default="")
     def feature_detail(self):
         return FeatureListToFeature.objects.filter(feature_list=self.feature_list)
         
@@ -62,9 +63,9 @@ class Booking(models.Model):
     def __str__(self):
         return self.name
     def period(self):
-        f = datetime.fromtimestamp(int(self.start_time[0:10]))
-        s = datetime.fromtimestamp(int(self.end_time[0:10]))
-        return f.strftime("%d %b %H:%M") +" --- " +s.strftime("%d %b %H:%M")
+        f = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S") # datetime.fromtimestamp(int(self.start_time[0:10]))
+        s = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S") #datetime.fromtimestamp(int(self.end_time[0:10]))
+        return datetime.strftime(f,"%d %b %H:%M") +" --- " + datetime.strftime(s,"%d %b %H:%M") #str(datetime.strftime(f,"%d %b %H:%M")) +" --- " + str(datetime.strftime(s,"%d %b %H:%M"))
     def room_name(self):
         return self.room.name
     def student_name(self):
@@ -73,3 +74,5 @@ class Booking(models.Model):
         return self.student.student_id
     def booking_time(self):
         return self.create_time.split(".")[0]
+    
+    

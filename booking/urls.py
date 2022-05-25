@@ -11,4 +11,5 @@ urlpatterns = [
     path('registration_submit', views.registration_submit, name='registration_submit'),
     path('booking_room', views.booking_room, name='booking_room'),
     path('add_booking', views.add_booking, name='add_booking'),
+    path('my_bookings', views.my_bookings, name='my_bookings'),
 ]

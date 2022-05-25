@@ -1,46 +1,41 @@
 {% extends 'booking/public/base.html' %}
 {% block content  %}
-    {% if student_id %}
-        Welcome: {{student_name}}
-    {% endif %}
+  
+    
+  
 
- 
 
     {% if room_list %}
-        
-        {% for room in room_list %}
-            <div class="card" style=" margin:5px auto  ; width: 30rem;">
+        <div class="room_list_board">
+          {% for room in room_list %}
+            <div class="card">
+              <a href="#">
+              <img src="/static/booking/images/{{room.picture}}" class="card-img-top" >
                 <div class="card-body">
                   <h5 class="card-title">{{ room.name }}</h5>
                   <p class="card-text">{{ room.room_address }}</p>
                 </div>
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush">  
+                  <li class="list-group-item">
                     {% for f in room.feature_detail %}
 
-                    <li class="list-group-item">{{f.feature.name}} x {{f.feature_count}}</li>
+                    {{f.feature.name}} x {{f.feature_count}},
 
                     {% endfor %}
+                  </li>
                 </ul>
-                <div class="card-body">
-                  <!--<button onclick="show_detial({{room.room_id}})" class="card-link">Check detail</button> -->
-                  <a href="./booking_room?roomid={{room.room_id}}" class="card-link">Book</a>
-                </div>
+              </a>
               </div>
 
 
-              <div class="top-50 start-0 translate-middle-y" style="z-index: 11" data-bs-autohide="false">
-                <div id="liveToast{{ room.room_id }}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                  <div class="toast-header">
-                    <strong class="me-auto">{{ room.name }}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                  </div>
-                  <div class="toast-body">
-                    {{ room.room_address }}
-                  </div>
-                </div>
-              </div>
+          
 
         {% endfor %}
+        </div>    
+
+
+
+        
 
         
 
