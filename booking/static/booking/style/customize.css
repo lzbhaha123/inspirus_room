@@ -19,3 +19,12 @@
 a{
     text-decoration: none;
 }
+
+.feature_block{
+    padding: 10px 10px 10px 0px;
+    float: left;
+}
+
+.cb{
+    clear: both;
+}

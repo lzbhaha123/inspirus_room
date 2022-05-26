@@ -1,15 +1,24 @@
 {% extends 'booking/public/base.html' %}
 {% block content  %}
   
-    
-  
-
-
+<div class="alert alert-light" role="alert">
+  <form class="row g-3 needs-validation was-validated" action="./" method="POST" novalidate>
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      <input type="text" class="form-control"  name="info" id="info"  placeholder="What room do you want?">
+      {% for f in features %}
+        <input type="checkbox" class="btn-check" name="featurecheck{{f.feature_id}}" id="featurecheck_{{f.feature_id}}" value="{{f.feature_id}}" autocomplete="off">
+        <label class="btn btn-primary" for="featurecheck_{{f.feature_id}}">{{f.name}}</label>
+      {% endfor %}
+      <button class="btn btn-outline-secondary" type="submit" >Find</button>
+    </div>
+  </form>
+</div>
     {% if room_list %}
         <div class="room_list_board">
           {% for room in room_list %}
             <div class="card">
-              <a href="#">
+              <a href="/booking/booking_room?roomid={{room.room_id}}">
               <img src="/static/booking/images/{{room.picture}}" class="card-img-top" >
                 <div class="card-body">
                   <h5 class="card-title">{{ room.name }}</h5>
@@ -26,19 +35,8 @@
                 </ul>
               </a>
               </div>
-
-
-          
-
         {% endfor %}
         </div>    
-
-
-
-        
-
-        
-
         <script>
             function show_detial(id){
                 var toast = new bootstrap.Toast(document.getElementById('liveToast'+id))

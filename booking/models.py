@@ -34,7 +34,7 @@ class GuideLine(models.Model):
     name =  models.CharField(max_length=25)
     content =  models.CharField(max_length=255)
     def __str__(self):
-        return self.name
+        return self.content
     
 class Room(models.Model):
     room_id = models.AutoField(primary_key=True)

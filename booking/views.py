@@ -1,7 +1,7 @@
 import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from booking.models import Student,Room,Booking
+from booking.models import Student,Room,Booking,Feature,FeatureList,FeatureListToFeature
 from django.core import serializers
 from django.http import JsonResponse
 from datetime import datetime
@@ -17,13 +17,37 @@ def index(request):
      except:
           pass
      
-     try:
-          room_list = Room.objects.order_by('room_id')
-     except:
-          pass
+     if (request.POST.get("info")!="" and request.POST.get("info")!=None):
+          try:
+               info = request.POST.get("info")
+               room_list = Room.objects.order_by('room_id').filter(name__contains=info) | Room.objects.order_by('room_id').filter(room_address__contains=info)
+               
+          except:
+               pass
+     else:
+          try:
+               room_list = Room.objects.order_by('room_id')
+          except:
+               pass
+
+     v = ""
+     features = Feature.objects.all()
      
-     
-     return render(request, 'booking/index.html', {'student_id':student_id,'student_name':student_name,'room_list':room_list})
+     checks = []
+     for f in features:
+          if(request.POST.get("featurecheck"+str(f.feature_id))!=None):
+               checks.append(request.POST.get("featurecheck"+str(f.feature_id)))
+     if len(checks):
+          ff = FeatureListToFeature.objects.filter(feature__in=checks)
+          fl = []
+          for f in ff:
+               fl.append(f.feature_list)
+          #return HttpResponse(fl)  
+          if room_list == None:
+               room_list = Room.objects.filter(feature_list__in = fl)
+          else:
+               room_list = room_list.filter(feature_list__in = fl)
+     return render(request, 'booking/index.html', {'features':features,'student_id':student_id,'student_name':student_name,'room_list':room_list})
 
 def login(request):
      return render(request, 'booking/login.html', {})
@@ -33,7 +57,7 @@ def login_submit(request):
      try:
           user_data = Student.objects.get(student_id=request.POST.get("studentId"),student_password=request.POST.get("password"))
      except:
-          return HttpResponse("No student")
+          return render(request, 'booking/login.html', {})
      
      request.session['student_id'] = user_data.student_id
      request.session['student_name'] = user_data.student_name
@@ -68,12 +92,13 @@ def booking_room(request):
      except:
           pass
      
+     room = Room.objects.get(room_id = room_id)
      bookings = Booking.objects.filter(room=Room.objects.get(room_id=room_id))
      for obj in bookings:
           obj.start_time = str(int(datetime.timestamp(datetime.strptime(obj.start_time,"%Y-%m-%d %H:%M:%S"))))+"000"
           obj.end_time = str(int(datetime.timestamp(datetime.strptime(obj.end_time,"%Y-%m-%d %H:%M:%S"))))+"000"
 
-     return render(request, 'booking/booking_room.html', {'student_id':student_id,'student_name':student_name,"bookings":serializers.serialize("json", bookings)})
+     return render(request, 'booking/booking_room.html', {'room':room,'student_id':student_id,'student_name':student_name,"bookings":serializers.serialize("json", bookings)})
 
 def add_booking(request):
      room_id = request.POST.get("roomId")
@@ -106,12 +131,12 @@ def my_bookings(request):
           paginator = Paginator(bookings, 20)
           page_number = request.GET.get('page')
           page_obj = paginator.get_page(page_number)
-          
-          
           return render(request, 'booking/my_bookings.html',{'page_obj':page_obj,'bookings':bookings,'student_id':student_id,'student_name':student_name})
      except:
           pass
-     
-     
-     
      return render(request, 'booking/my_bookings.html',{'student_id':student_id,'student_name':student_name})
+
+def cancel(request):
+     id = request.GET.get('id')
+     Booking.objects.get(booking_id = id).delete()
+     return HttpResponseRedirect("./my_bookings")

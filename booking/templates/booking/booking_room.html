@@ -6,12 +6,15 @@
     <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
     <script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
 
-    {% if student_id %}
-        Welcome: {{student_name}}
-    {% else %}
-        Please login for booking room.    
-    {% endif %}
 
+    <h2>{{room.name}}</h2>
+    {% for f in room.feature_detail %}
+
+        <div class="feature_block">{{f.feature.name}} x {{f.feature_count}}</div>
+
+    {% endfor %}
+    <div class="cb"></div>
+    <p>{{room.guideline}}</p>
     <div id="calendar" style="height: 200px;"></div>
     
     <script>
