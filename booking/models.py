@@ -2,6 +2,7 @@ from statistics import mode
 from xml.parsers.expat import model
 from django.db import models
 from datetime import datetime
+import pytz
 
 # Create your models here.
 class Student(models.Model):
@@ -63,8 +64,12 @@ class Booking(models.Model):
     def __str__(self):
         return self.name
     def period(self):
+        NZST = pytz.timezone('Pacific/Auckland')
         f = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S") # datetime.fromtimestamp(int(self.start_time[0:10]))
         s = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S") #datetime.fromtimestamp(int(self.end_time[0:10]))
+        
+        f = f.astimezone(NZST)
+        s = s.astimezone(NZST)
         return datetime.strftime(f,"%d %b %H:%M") +" --- " + datetime.strftime(s,"%d %b %H:%M") #str(datetime.strftime(f,"%d %b %H:%M")) +" --- " + str(datetime.strftime(s,"%d %b %H:%M"))
     def room_name(self):
         return self.room.name

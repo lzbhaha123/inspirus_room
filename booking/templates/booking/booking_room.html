@@ -36,7 +36,6 @@
         var schedules = new Array()
         for( var i =0; i < bookings.length;i++){
            
-            console.log(bookings[i])
             {% if student_id %}
                 var s ={
                     id: bookings[i].pk,
@@ -90,7 +89,8 @@
                     }*/
                 },
                 'beforeCreateSchedule': function(e) {
-                    console.log('beforeCreateSchedule', e);
+                    console.log(e.start)
+                    console.log(e.start.valueOf())
                     /* step1. open custom edit popup */
                     const result = confirm("Are you sure, you want to booking between this time?");
                     
@@ -119,7 +119,6 @@
                 return String(10000*yyyy + 100*mm + dd); // Leading zeros for mm and dd
             }
             function bookingRoom(e){
-                console.log(e)
                 //console.log(new Date(e.start.valueOf()));
                 $.ajax('./add_booking', {
                     type: 'POST',  // http method
@@ -133,7 +132,7 @@
                         if(data.login){
                             window.location.replace("./login");
                         }else if(data.type){
-                            console.log("done")
+                            
                             var schedule = {
                                 id: +new Date(),
                                 title: "Your booking",
