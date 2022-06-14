@@ -141,3 +141,6 @@ def cancel(request):
      id = request.GET.get('id')
      Booking.objects.get(booking_id = id).delete()
      return HttpResponseRedirect("./my_bookings")
+
+def about(request):
+     return render(request, 'booking/about.html', {})

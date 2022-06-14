@@ -30,7 +30,8 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ('booking_time','room_name','period','student_id', 'student_name')
     
     
-    
+admin.site.site_header = 'Inspirus Admin Panel'
+# change name of admin panel
 admin.site.register(Room,RoomAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Feature)
