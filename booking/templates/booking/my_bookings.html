@@ -14,7 +14,7 @@
   <tbody>
   {% for booking in page_obj %}
   <tr>
-    <td>{{booking.room__name}}</td><td>{{booking.start_time}}</td><td>{{booking.end_time}}</td><td>{% if booking.confirm %} Confirmed {% else %} Not confirm {% endif %}</td><td><a href="./cancel?id={{booking.booking_id}}">Cancel</a></td>
+    <td>{{booking.room__name}}</td><td>{{booking.start_time}}</td><td>{{booking.end_time}}</td><td>{% if booking.confirm %} Confirmed {% else %} Not confirmed {% endif %}</td><td><a href="./cancel?id={{booking.booking_id}}">Cancel</a></td>
   </tr>
   {% endfor %}
   </tbody>

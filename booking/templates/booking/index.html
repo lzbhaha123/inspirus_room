@@ -15,7 +15,7 @@
   </form>
 </div>
     {% if room_list %}
-        <div class="room_list_board">
+        <div class="room_list_board justify-content-md-between justify-content-center">
           {% for room in room_list %}
             <div class="card">
               <a href="/booking/booking_room?roomid={{room.room_id}}">

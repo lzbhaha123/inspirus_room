@@ -32,6 +32,7 @@ class BookingAdmin(admin.ModelAdmin):
     
 admin.site.site_header = 'Inspirus Admin Panel'
 # change name of admin panel
+admin.site.site_url = "/booking"
 admin.site.register(Room,RoomAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Feature)
