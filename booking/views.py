@@ -143,4 +143,23 @@ def cancel(request):
      return HttpResponseRedirect("./my_bookings")
 
 def about(request):
-     return render(request, 'booking/about.html', {})
+     student_id = None
+     student_name = None
+     try:
+          student_id = request.session['student_id']
+          student_name = request.session['student_name']
+     except:
+          pass
+
+     return render(request, 'booking/about.html', {'student_id':student_id,'student_name':student_name})
+
+def map(request):
+     student_id = None
+     student_name = None
+     try:
+          student_id = request.session['student_id']
+          student_name = request.session['student_name']
+     except:
+          pass
+
+     return render(request, 'booking/map.html', {'student_id':student_id,'student_name':student_name})
