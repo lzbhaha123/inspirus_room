@@ -10,18 +10,26 @@ class Student(models.Model):
     student_name = models.CharField(max_length=50)
     student_email = models.CharField(max_length=50)
     student_password= models.CharField(max_length=25)
+    
+    class Meta:
+        app_label = 'booking'
+    
     def __str__(self):
         return self.student_id
     
 class Feature(models.Model):
     feature_id = models.AutoField(primary_key=True)
     name =  models.CharField(max_length=25)
+    class Meta:
+        app_label = 'booking'
     def __str__(self):
         return self.name
     
 class FeatureList(models.Model):
     feature_list_id = models.AutoField(primary_key=True)
     name =  models.CharField(max_length=25)
+    class Meta:
+        app_label = 'booking'
     def __str__(self):
         return self.name
     
@@ -29,11 +37,15 @@ class FeatureListToFeature(models.Model):
     feature_list =  models.ForeignKey(FeatureList,on_delete=models.CASCADE)
     feature = models.ForeignKey(Feature,on_delete=models.CASCADE)
     feature_count = models.IntegerField()
+    class Meta:
+        app_label = 'booking'
     
 class GuideLine(models.Model):
     guideline_id = models.AutoField(primary_key=True)
     name =  models.CharField(max_length=25)
     content =  models.CharField(max_length=255)
+    class Meta:
+        app_label = 'booking'
     def __str__(self):
         return self.content
     
@@ -46,6 +58,8 @@ class Room(models.Model):
     other_detail =  models.CharField(max_length=255)
     qe_code_url =  models.CharField(max_length=255)
     picture = models.CharField(max_length=50,default="")
+    class Meta:
+        app_label = 'booking'
     def feature_detail(self):
         return FeatureListToFeature.objects.filter(feature_list=self.feature_list)
         
@@ -61,6 +75,8 @@ class Booking(models.Model):
     confirm = models.BooleanField(default=False)
     student = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True)
     room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True)
+    class Meta:
+        app_label = 'booking'
     def __str__(self):
         return self.name
     def period(self):
