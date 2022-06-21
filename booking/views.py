@@ -65,7 +65,7 @@ def login_submit(request):
      request.session['student_email'] = user_data.student_email
      return HttpResponseRedirect("./")
 
-def login_out(request):
+def logout(request):
      request.session['student_id'] = None
      request.session['student_name'] = None
      request.session['student_email'] = None
