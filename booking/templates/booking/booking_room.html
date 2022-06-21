@@ -79,6 +79,7 @@
         // event handlers
             cal.on({
                 'clickSchedule': function(e) {
+                    
                     /* step1. open custom detail popup 
                     const willModify = confirm(`title: ${e.schedule.title}\n when: ${yyyymmdd(new Date(e.schedule.start))} \nWill you update schedule?`);
                     
@@ -89,8 +90,7 @@
                     }*/
                 },
                 'beforeCreateSchedule': function(e) {
-                    console.log(e.start)
-                    console.log(e.start.valueOf())
+                    console.log(e.guide)
                     /* step1. open custom edit popup */
                     const result = confirm("Are you sure, you want to booking between this time?");
                     
@@ -119,6 +119,7 @@
                 return String(10000*yyyy + 100*mm + dd); // Leading zeros for mm and dd
             }
             function bookingRoom(e){
+                
                 //console.log(new Date(e.start.valueOf()));
                 $.ajax('./add_booking', {
                     type: 'POST',  // http method
