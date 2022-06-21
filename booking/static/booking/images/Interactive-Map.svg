@@ -23,11 +23,11 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="0.67243314"
-     inkscape:cx="452.83313"
+     inkscape:cx="279.5817"
      inkscape:cy="359.88708"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
-     inkscape:window-x="-8"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="g1891" />
@@ -633,7 +633,7 @@
       </a>
       <a
          id="a9689"
-         xlink:href="booking/booking_room?roomid=2"
+         xlink:href="booking_room?roomid=2"
          inkscape:label="aI202"
          target="_parent">
         <g
