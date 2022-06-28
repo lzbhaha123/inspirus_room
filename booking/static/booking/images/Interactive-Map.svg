@@ -328,7 +328,7 @@
        inkscape:label="Rooms">
       <a
          id="a12402"
-         xlink:href="booking/booking_room?roomid=7"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=7"
          inkscape:label="aI208"
          target="_parent">
         <g
@@ -419,7 +419,7 @@
       </g>
       <a
          id="a11945"
-         xlink:href="booking/booking_room?roomid=6"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=6"
          inkscape:label="aI206"
          target="_parent">
         <g
@@ -471,7 +471,7 @@
       </a>
       <a
          id="a11490"
-         xlink:href="booking/booking_room?roomid=5"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=5"
          inkscape:label="aI205"
          target="_parent">
         <g
@@ -533,7 +533,7 @@
       </a>
       <a
          id="a11034"
-         xlink:href="booking/booking_room?roomid=4"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=4"
          inkscape:label="aI204"
          target="_parent">
         <g
@@ -573,7 +573,7 @@
       </a>
       <a
          id="a10583"
-         xlink:href="booking/booking_room?roomid=3"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=3"
          inkscape:label="aI203"
          target="_parent">
         <g
@@ -633,7 +633,7 @@
       </a>
       <a
          id="a9689"
-         xlink:href="booking_room?roomid=2"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=2"
          inkscape:label="aI202"
          target="_parent">
         <g
@@ -675,7 +675,7 @@
       </a>
       <a
          id="a9240"
-         xlink:href="booking/booking_room?roomid=1"
+         xlink:href="http://13.210.224.143/booking/booking_room?roomid=1"
          style="display:inline"
          inkscape:label="aI201"
          target="_parent">
